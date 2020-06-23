@@ -1,0 +1,35 @@
+{
+  "name": "koa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "fs-extra": "^7.0.0",
+    "i": "^0.3.6",
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.10",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.22.2",
+    "mysql2": "^1.6.1",
+    "npm": "^6.3.0",
+    "replaceall": "^0.1.6",
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.0.0",
+    "underscore": "^1.9.1",
+    "validator": "^10.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.newtel.com.vn/ducquang/nodejs-framework.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
