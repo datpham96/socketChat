@@ -1,0 +1,14 @@
+{
+    "validate": {
+        "required": "val.required",
+        "email": "val.email",
+        "min": "val.min",
+        "max": "val.max",
+        "array": "val.array"
+    },
+    "amqp": {
+        "connectService": "amqp.connectService",
+        "createChannel": "amqp.createChannel",
+        "assertQueue": "amqp.assertQueue"
+    }
+}
