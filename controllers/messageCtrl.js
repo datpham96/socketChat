@@ -13,18 +13,20 @@ module.exports = class messageCtrl extends controller{
                 'topicId': 'required',
                 'body': 'required',
                 'emailSend': 'required|email',
-                'emailReceive': 'required|email',
+                'emailReceive': 'required|array',
             }, {
                     'topicId.required': 'topicId không được bỏ trống',
                     'body.required': 'body không được bỏ trống',
                     'emailSend.required': 'email người gửi không được bỏ trống',
                     'emailSend.email': 'email người gửi không hợp lệ',
                     'emailReceive.required': 'email người nhạn không được bỏ trống',
-                    'emailReceive.email': 'email người nhận không hợp lệ',
+                    'emailReceive.array': 'email người nhận không đúng dịnh dạng'
                 });
-    
+            
             if (validate.fails()) {
+                console.log(validate.messages())
                 return this.response(validate.messages(), 422);
+                
             }
     
             let emailSend = this.getInput('emailSend');
@@ -32,12 +34,15 @@ module.exports = class messageCtrl extends controller{
             let topicId = this.getInput('topicId');
             let body = this.getInput('body', '');
             let articleId = this.getInput('articleId', '')
-
+            
             global.messageSocket.to(messageFunc.buildRoomName(emailSend)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId});
-            global.messageSocket.to(messageFunc.buildRoomName(emailReceive)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId});
+            for(let sigleEmailReceive of emailReceive){
+                global.messageSocket.to(messageFunc.buildRoomName(sigleEmailReceive)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId});
+            }
             
             return this.response({status: true});
         } catch (error) {
+            console.log(error)
             return this.response({status: false}, 422);
         }
         

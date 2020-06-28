@@ -5,6 +5,14 @@ const lodash = require("lodash");
 const db = require('../models');
 
 let FuncValidate = {
+    array: async (value) => {
+        let result = false;
+        if(typeof value == 'array' || typeof value == 'object'){
+            result = true;
+        }
+
+        return result;
+    },
     required: async (value) => {
         let result = false;
         if (value.toString().trim().length > 0) {
