@@ -21,6 +21,7 @@ const call = io.of('/call');
 
 
 message.on('connection', (socket) => {
+    console.log("connected")
     try {
 	    new messageProcess(socket, message);
     } catch (error) {

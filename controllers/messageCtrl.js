@@ -36,10 +36,10 @@ module.exports = class messageCtrl extends controller{
             let articleId = this.getInput('articleId', '')
             let typeMessage = this.getInput('typeMessage', '')
             
-            global.messageSocket.to(messageFunc.buildRoomName(emailSend)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId, typeMessage});
-            for(let sigleEmailReceive of emailReceive){
-                global.messageSocket.to(messageFunc.buildRoomName(sigleEmailReceive)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId, typeMessage});
-            }
+            global.messageSocket.to(messageFunc.buildRoomName(topicId)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId, typeMessage});
+            // for(let sigleEmailReceive of emailReceive){
+            //     global.messageSocket.to(messageFunc.buildRoomName(sigleEmailReceive)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId});
+            // }
             
             return this.response({status: true});
         } catch (error) {
