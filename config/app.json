@@ -4,7 +4,7 @@
     "port": "3008",
     "auth": { "name": "newtel", "pass": "newtel123" },
     "authServer": {
-        "url": "http://localhost/api/v1"
+        "url": "http://172.16.20.180/authChat/api/v1"
     },
     "calendarService": {
         "url": "http://calendar.newtel.com.vn:3010/api/v1",

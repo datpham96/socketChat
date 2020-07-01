@@ -11,9 +11,11 @@ class login {
             let responseData = await mAuthServer.getUserInfo();
             
             if(responseData.data.email){
+                console.log(responseData.data.email)
                 this.socket.join(messageFunc.buildRoomName(responseData.data.email));
             }
         } catch (error) {
+            console.log(error)
             this.socket.disconnect(true);
         }
         
