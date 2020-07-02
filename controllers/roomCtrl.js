@@ -16,7 +16,27 @@ module.exports = class roomCtrl extends controller{
     }
 
     async invite(){
-
+        let validate = await this.validate(this.getBody(), {
+            'roomId': 'required',
+            'name': 'required',
+            'email': 'required|email',
+        }, {
+            'roomId.required': 'Id phòng không được bỏ trống',
+            'name.required': 'Tên phòng không được bỏ trống',
+            'email.required': 'Email người gửi không được bỏ trống',
+            'email.email': 'Email người gửi không hợp lệ'
+        });
+        
+        if (validate.fails()) {
+            return this.response(validate.messages(), 422);
+            
+        }
+        //code
+        global.messageSocket.on(messageConfig.onEvent.invite, function(data){
+            global.messageSocket.emit(messageConfig.onEvent.invite + "_" + data.email, {
+                data: this.getBody()
+            });
+        })
     }
 
     async index(){

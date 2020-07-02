@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const messageCtrl = require('../controllers/messageCtrl');
+const roomCtrl = require('../controllers/roomCtrl');
 const mdwAddHeaderJson = require('../middleware/apiHeaderResponse');
 const config = require('../config/app.json');
 const koaBasicAuth = require('koa-basic-auth');

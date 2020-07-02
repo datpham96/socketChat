@@ -1,8 +1,12 @@
 module.exports = {
     onEvent: {
-        login: 'login'
+        login: 'login',
+        invite: 'invite',
+        statusConfirm: 'statusConfirm'
     },
     emitEvent: {
-        sendMessage: 'sendMessage'
+        sendMessage: 'sendMessage',
+        invite: 'invite',
+        statusConfirm: 'statusConfirm'
     }
 }

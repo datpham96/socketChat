@@ -13,6 +13,7 @@ io.adapter(redisAdapter({ host: appConfig.redis.host, port: appConfig.redis.port
 const redisService = require('./libs/services/redisService');
 
 const messageProcess = require('./socketProcess/message/messageProcess');
+const roomProcess = require('./socketProcess/message/roomProcess');
 const message = io.of('/message');
 
 const userOnlineProcces = require('./socketProcess/call/userOnlineProcces');
@@ -24,6 +25,7 @@ message.on('connection', (socket) => {
     console.log("connected")
     try {
 	    new messageProcess(socket, message);
+	    new roomProcess(socket, message);
     } catch (error) {
         console.log(error);
     }

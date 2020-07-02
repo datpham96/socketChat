@@ -17,6 +17,14 @@ class messageService {
     listRoomByEmail(email){
         return axios.get(this.url + '/user/roomBasic/' + email, {headers: this.header})
     }
+
+    addRoom(email, roomId){
+        let postData = {
+            email: email,
+            roomId: roomId
+        }
+        return axios.post(this.url + '/user/addRoomBasic', postData, {headers: this.header})
+    }
    
 }
 
