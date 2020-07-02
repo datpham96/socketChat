@@ -1,14 +1,22 @@
 const controller = require('./controller');
 const messageFunc = require('../socketProcess/message/myFunc');
 const messageConfig = require('../socketProcess/message/config');
+const usersOnline = require('../socketProcess/message/usersOnline')
 
 module.exports = class roomCtrl extends controller{
     constructor(ctx){
         super(ctx);
+        this.usersOnline = new usersOnline();
     }
 
     async addRoom(){
-        
+        let usersOnline = await redisService.get(appConfig.redis.usersOnline) || {};
+        for(let index in usersOnline){
+            if(usersOnline[index].socketId.includes(this.socket.id)){
+                newUser[index] = usersOnline[index];
+            }
+        }
+        this.usersOnline.getUserOnline();
     }
 
     async outRoom(){

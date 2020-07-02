@@ -9,10 +9,6 @@ let apiRouter = new Router({
     prefix: '/api/v1'
 });
 
-let apiRouter = new Router({
-    prefix: '/api/v1'
-});
-
 apiRouter.use(mdwAddHeaderJson);
 apiRouter.use(koaBasicAuth(config.auth));
 
@@ -20,7 +16,7 @@ apiRouter.use(koaBasicAuth(config.auth));
 apiRouter.post('/sendMessage', async ctx => { await new messageCtrl(ctx).index() });
 
 //addRoom
-apiRouter.post('/addRom', async ctx => { await new roomCtrl(ctx).addRom() });
+apiRouter.post('/addRom', async ctx => { await new roomCtrl(ctx).addRoom() });
 
 //outRoom
 apiRouter.post('/outRoom', async ctx => { await new roomCtrl(ctx).outRoom() });
