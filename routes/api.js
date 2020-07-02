@@ -19,9 +19,12 @@ apiRouter.use(koaBasicAuth(config.auth));
 apiRouter.post('/sendMessage', async ctx => { await new messageCtrl(ctx).index() });
 
 //addRoom
-apiRouter.post('/addRom', async ctx => { await new messageCtrl(ctx).addRom() });
+apiRouter.post('/addRom', async ctx => { await new roomCtrl(ctx).addRom() });
 
 //outRoom
-apiRouter.post('/outRoom', async ctx => { await new messageCtrl(ctx).outRoom() });
+apiRouter.post('/outRoom', async ctx => { await new roomCtrl(ctx).outRoom() });
+
+//outRoom
+apiRouter.post('/invite', async ctx => { await new roomCtrl(ctx).invite() });
 
 module.exports = apiRouter;

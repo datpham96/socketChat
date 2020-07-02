@@ -15,6 +15,10 @@ module.exports = class roomCtrl extends controller{
 
     }
 
+    async invite(){
+
+    }
+
     async index(){
         try {
             let validate = await this.validate(this.getBody(), {
