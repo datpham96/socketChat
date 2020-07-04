@@ -2,6 +2,7 @@ const redisService = require('../../libs/services/redisService');
 const appConfig = require('../../config/app.json');
 const messageService = require('../../libs/services/messageService')
 const messageFunc = require('./myFunc');
+const typeConfig = require('./config')
 
 class usersOnline{
     constructor(socket, io){
@@ -17,7 +18,7 @@ class usersOnline{
                 await this.messageService.checkInvite(data.email, data.roomId)
                 let socketId = usersOnline[data.email].socketId;
                 for(var i in socketId){
-                    this.io.to(socketId[i]).emit('invite', data);
+                    this.io.to(socketId[i]).emit(typeConfig.emitEvent.invite, data);
                 }
             } catch (error) {
                 console.log(error)
@@ -34,8 +35,14 @@ class usersOnline{
 
     async confirmInvite(data){
         if(data.type){
-            //join room added 
-            this.socket.join(messageFunc.buildRoomName(data.roomId));
+            let usersOnline = await redisService.get(appConfig.redis.usersOnline) || {};
+            if(usersOnline[data.email]){
+                let socketId = usersOnline[data.email].socketId;
+                for(var i in socketId){
+                    let socket = this.io.connected[socketId[i]];
+                    socket.join(messageFunc.buildRoomName(data.roomId))
+                }
+            }
             //add room to csdl
             try {
                 await this.messageService.addRoom(data.email, data.roomId)
@@ -45,28 +52,20 @@ class usersOnline{
         }
     }
  
-    getUserOnline(){
-        
-
-        
-        console.log(this.socket.id,'socket')
-        // for(let index in usersOnline){
-        //     if(usersOnline[index].socketId.includes(this.socket.id)){
-        //         newUser[index] = usersOnline[index];
-        //     }
-        // }
-
-        // console.log(newUser,'newUser')
-        // let newUser = {};
-
-        // for(let index in usersOnline){
-        //     if(usersOnline[index].socketId.includes(this.socket.id)){
-        //         newUser[index] = usersOnline[index];
-        //     }
-        // }
-
-        // this.socket.broadcast.emit(config.socket.usersOnline, newUser);
-        
+    async outRoom(data){
+        let usersOnline = await redisService.get(appConfig.redis.usersOnline) || {};
+        if(usersOnline[data.email]){
+            let socketId = usersOnline[data.email].socketId;
+            for(var i in socketId){
+                let socket = this.io.connected[socketId[i]];
+                socket.leave(messageFunc.buildRoomName(data.roomId))
+            }
+        }
+        try {
+            await this.messageService.outRoom(data.email, data.roomId)
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

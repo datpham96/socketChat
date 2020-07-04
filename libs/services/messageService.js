@@ -38,6 +38,14 @@ class messageService {
     checkInvite(email, roomId){
         return axios.get(this.url + '/checkInvite/' + email + '/' + roomId, {headers: this.header})
     }
+
+    outRoom(email, roomId){
+        let postData = {
+            email: email,
+            roomId: roomId
+        }
+        return axios.post(this.url + '/user/out', postData, {headers: this.header})
+    }
    
 }
 

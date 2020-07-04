@@ -28,7 +28,6 @@ module.exports = class roomCtrl extends controller{
                 });
             
             if (validate.fails()) {
-                console.log(validate.messages())
                 return this.response(validate.messages(), 422);
                 
             }

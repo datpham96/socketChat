@@ -14,6 +14,10 @@ class roomProcess {
         socket.on(eventConfig.onEvent.statusConfirm, async (data) => {
             await usersOnlineProcces.confirmInvite(data);
         });
+
+        socket.on(eventConfig.onEvent.uotRoom, async (data) => {
+            await usersOnlineProcces.outRoom(data);
+        });
     }
 
     
