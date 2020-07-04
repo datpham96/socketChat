@@ -2,49 +2,13 @@ const controller = require('./controller');
 const messageFunc = require('../socketProcess/message/myFunc');
 const messageConfig = require('../socketProcess/message/config');
 const usersOnline = require('../socketProcess/message/usersOnline')
+const redisService = require('../libs/services/redisService')
+const appConfig = require('../config/app.json')
 
 module.exports = class roomCtrl extends controller{
     constructor(ctx){
         super(ctx);
         this.usersOnline = new usersOnline();
-    }
-
-    async addRoom(){
-        let usersOnline = await redisService.get(appConfig.redis.usersOnline) || {};
-        for(let index in usersOnline){
-            if(usersOnline[index].socketId.includes(this.socket.id)){
-                newUser[index] = usersOnline[index];
-            }
-        }
-        this.usersOnline.getUserOnline();
-    }
-
-    async outRoom(){
-
-    }
-
-    async invite(){
-        let validate = await this.validate(this.getBody(), {
-            'roomId': 'required',
-            'name': 'required',
-            'email': 'required|email',
-        }, {
-            'roomId.required': 'Id phòng không được bỏ trống',
-            'name.required': 'Tên phòng không được bỏ trống',
-            'email.required': 'Email người gửi không được bỏ trống',
-            'email.email': 'Email người gửi không hợp lệ'
-        });
-        
-        if (validate.fails()) {
-            return this.response(validate.messages(), 422);
-            
-        }
-        //code
-        global.messageSocket.on(messageConfig.onEvent.invite, function(data){
-            global.messageSocket.emit(messageConfig.onEvent.invite + "_" + data.email, {
-                data: this.getBody()
-            });
-        })
     }
 
     async index(){
@@ -77,9 +41,6 @@ module.exports = class roomCtrl extends controller{
             let typeMessage = this.getInput('typeMessage', '')
             
             global.messageSocket.to(messageFunc.buildRoomName(topicId)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId, typeMessage});
-            // for(let sigleEmailReceive of emailReceive){
-            //     global.messageSocket.to(messageFunc.buildRoomName(sigleEmailReceive)).emit(messageConfig.emitEvent.sendMessage, {emailSend, topicId, body, articleId});
-            // }
             
             return this.response({status: true});
         } catch (error) {

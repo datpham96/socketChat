@@ -40,6 +40,7 @@ class login {
                 }
             }
         } catch (error) {
+            console.log(error)
             this.socket.disconnect(true);
         }
         

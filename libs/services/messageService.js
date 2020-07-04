@@ -18,12 +18,25 @@ class messageService {
         return axios.get(this.url + '/user/roomBasic/' + email, {headers: this.header})
     }
 
-    addRoom(email, roomId){
+    inviteRoom(email, roomId){
         let postData = {
             email: email,
             roomId: roomId
         }
+        return axios.post(this.url + '/user/invite', postData, {headers: this.header})
+    }
+
+    addRoom(email, roomId){
+        let postData = {
+            email: email,
+            roomId: roomId,
+            type: true
+        }
         return axios.post(this.url + '/user/addRoomBasic', postData, {headers: this.header})
+    }
+   
+    checkInvite(email, roomId){
+        return axios.get(this.url + '/checkInvite/' + email + '/' + roomId, {headers: this.header})
     }
    
 }
